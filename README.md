@@ -16,10 +16,11 @@ Most verbs follow exact dplyr syntax, though sometimes there are slight variatio
 - **_filter**: `df |> x-> _filter(x, x.value .> 10, x.value2 .< 5, (x.value3 .== 1) .| (x.value4 .== 2))`
 - **_arrange**: `df |> x-> _arrange(x, :col1, desc(:col2))`
 - **_summarise**: `df |> x-> _summarise(x, new_col = :col => sum)`
-- **_group_by**: `df |> x-> _group_by(x, [:col1, :col2])`
-- **_left_join, _right_join, _inner_join, _outer_join**: `df |> x-> _left_join(x, y, Dict(:ida => :idb))`
+- **_group_by**: `df |> x-> _group_by(x, :col1, :col2)`
+- **_group_by + _summarise**: `df |> x-> _group_by(x, :col1, :col2) |> x-> summarise(x, total = :col3 => sum)` 
+- **_left_join, _right_join, _inner_join, _outer_join**: `df |> x-> _left_join(x, y, on=Dict(:ida => :idb))`
 - **_gather**: `df |> x-> _gather(x, key=:country, value=:population, factor_cols=[:date])`
-- **_spread**: `df |> x-> _spread(x, :type, :value)`
+- **_spread**: `df |> x-> _spread(x, :key, :value)`
 - **_head**: `head(df)`
 - **_tail**: `tail(df)`
 - **_rename**: `df |> x->_rename(x, new_name=:old_name, new2=:old2)`

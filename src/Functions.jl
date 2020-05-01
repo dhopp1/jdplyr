@@ -157,8 +157,10 @@ summarize_cols = summarise_cols
 
 
 # group by
-"identical to DataFrames.groupby, reproduced here for syntactical continuity"
-_group_by = groupby
+"args[1] = dataframe to group, args[2:end = column names to group by (Symbols)]"
+function _group_by(args...)
+    groupby(args[1], collect(args[2:end]))
+end
 
 
 
