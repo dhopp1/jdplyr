@@ -28,7 +28,7 @@ export _read_csv
 export _write_csv
 
 # select
-function _except(df, x) 
+function _except(df, x)
     col_order = Dict(zip(1:length(names(df)), names(df)))
     col_order = DataFrame(order=collect(keys(col_order)), col=collect(values(col_order)))
     keep_cols = setdiff(Set(names(df)), Set(x)) |> collect
@@ -159,7 +159,7 @@ end
                     _summarise(x, summarise_cols([:col1, :col2], "mean")...)
 """
 function _summarise(args...; kwargs...)
-    typeof(args[1]) == GroupedDataFrame{DataFrame} ? df = args[1] : df = groupby(args[1], [])
+    typeof(args[1]) == GroupedDataFrame{DataFrame} ? df = args[1] : df = DataFrames.groupby(args[1], [])
     if !isempty(kwargs)
         new_df = combine(values(kwargs), df)
     else
@@ -176,7 +176,7 @@ summarize_cols = summarise_cols
 # group by
 "args[1] = dataframe to group, args[2:end = column names to group by (Symbols)]"
 function _group_by(args...)
-    groupby(args[1], collect(args[2:end]))
+    DataFrames.groupby(args[1], collect(args[2:end]))
 end
 
 
