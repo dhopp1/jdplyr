@@ -1,5 +1,5 @@
 # jdplyr
-Dplyr-like syntax for DataFrames.jl. Made to leverage Julia's existing pipe functionality and the elegant syntax of dplyr.
+Dplyr-like syntax for DataFrames.jl. Made to leverage Julia's existing pipe functionality and the elegant syntax of dplyr.  Also exposes functions of commonly used data manipulation packages `DataFrames`, `Lazy`, and `Statistics`.
 
 ### Installation
 ```julia
@@ -7,6 +7,25 @@ using Pkg
 Pkg.add(PackageSpec(url="https://github.com/dhopp1/jdplyr"))
 using jdplyr
 ```
+
+### Piping syntax
+- **Native Julia pipes**: `df |> x-> _func(x, x.column)`. Anonymised function required, x is first argument in the function. `x.column` can be used to refer to columns in the previous dataframe.
+- **Lazy.jl threading (one line)**: `@> df _func(arg2) _func2(arg2)`. Previous output will be first parameter in new function, subsequent parameters follow. No need for anonymised function.
+- **Lazy.jl threading (multi-line)**:
+```
+@> begin df
+	_func(arg2)
+	_func2(arg2)
+end
+```
+- **Lazy.jl threading (anonymised)**:
+```
+@begin df
+	_func(arg2)
+x->_func2(x, x.column)
+end
+```
+In this case, when the dataframe needs to be referred to for columns etc., x is again the first argument of the function, `x.column` can be used to refer to columns in the dataframe.
 
 ### Functions
 Most verbs follow exact dplyr syntax, though sometimes there are slight variations due to differences in how Julia DataFrames work. For instance for pipes, `df |> x-> _func(x)` is the usual expected syntax of the package.
@@ -25,3 +44,5 @@ Most verbs follow exact dplyr syntax, though sometimes there are slight variatio
 - **_tail**: `tail(df)`
 - **_rename**: `df |> x->_rename(x, new_name=:old_name, new2=:old2)`
 - **_slice**: `df |> x-> _slice(x, 1:10)`
+- **_read_csv**: `_read_csv("path")`
+- **_write_csv**: `_write_csv(df, "path")`
