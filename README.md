@@ -31,6 +31,10 @@ In this case, when the dataframe needs to be referred to for columns etc., x is 
 Most verbs follow exact dplyr syntax, though sometimes there are slight variations due to differences in how Julia DataFrames work. 
 
 - **_select**: `df |> x-> _select(x, :col1, :col2)`
+	- **_except**: `df |> x-> _select(x, _except(x, [:col1, :col2))` select all columns except designated ones
+	- **_starts_with**: `df |> x-> _select(x, _starts_with(x, "beginning"))` select all columns that start with a string	
+	- **_ends_with**: `df |> x-> _select(x, _ends_with(x, "end"))` select all columns that end with a string
+	- **_contains**: `df |> x-> _select(x, _contains(x, "middle"))` select all columns that contain a string
 - **_mutate**: `df |> x-> _mutate(x, new_col=10, new_col2=x.old .+ 1)`
 - **_filter**: `df |> x-> _filter(x, x.value .> 10, x.value2 .< 5, (x.value3 .== 1) .| (x.value4 .== 2))`
 - **_arrange**: `df |> x-> _arrange(x, :col1, desc(:col2))`

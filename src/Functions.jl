@@ -1,6 +1,10 @@
 using CSV, DataFrames
 
 export _select
+export _except
+export _starts_with
+export _ends_with
+export _contains
 export _mutate
 export _filter
 export _arrange
@@ -24,6 +28,10 @@ export _read_csv
 export _write_csv
 
 # select
+_except(df, x) = setdiff(Set(names(df)), Set(x)) |> collect
+_starts_with(df, x) = names(df)[startswith.(string.(names(df)), x)]
+_ends_with(df, x) = names(df)[endswith.(string.(names(df)), x)]
+_contains(df, x) = names(df)[occursin.(string.(names(df)), x)]
 """
     select columns from a dataframe
 
@@ -38,10 +46,12 @@ export _write_csv
 
     example:
         df |> x->
-            _select(x, :col1, :col2)
+            _select(x, :col1, :col2, [:col3, :col4])
+        df |> x->
+            _select(x, _except(x, [:col1, :col2]))
 """
 function _select(args...)
-    args[1][!, collect(args[2:end])]
+    args[1][!, vcat(args[2:end]...)]
 end
 
 
