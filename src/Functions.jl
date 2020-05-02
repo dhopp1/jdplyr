@@ -21,7 +21,7 @@ export _head
 export _tail
 export _rename
 export _slice
-export desc
+export _desc
 export summarise_cols
 export summarize_cols
 export _read_csv
@@ -113,7 +113,7 @@ end
         args[1] : DataFrame
             dataframe to sort
         args[2:end] : Symbol
-            columns to be sorted by, in order input. desc(:col) will sort Z to A
+            columns to be sorted by, in order input. _desc(:col) will sort Z to A
 
     returns: DataFrame
         sorted dataframe
@@ -122,7 +122,7 @@ end
         df |> x->
             _arrange(x, :col1, desc(:col2))
 """
-desc(x) = order(x, rev=true)
+_desc(x) = order(x, rev=true)
 function _arrange(args...)
     sort(args[1], args[2:end])
 end
