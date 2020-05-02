@@ -1,5 +1,5 @@
 # jdplyr
-Dplyr-like syntax for DataFrames.jl. Made to leverage Julia's existing pipe functionality and the elegant syntax of dplyr.  Also exposes functions of commonly used data manipulation packages `DataFrames`, `Lazy`, and `Statistics`.
+Dplyr-like syntax for DataFrames.jl.  Also exposes functions `DataFrames`, `Lazy`, and `Statistics`.
 
 ### Installation
 ```julia
@@ -20,15 +20,15 @@ end
 ```
 - **Lazy.jl threading (anonymised)**:
 ```
-@begin df
+@> begin df
 	_func(arg2)
-x->_func2(x, x.column)
+x->	_func2(x, x.column)
 end
 ```
 In this case, when the dataframe needs to be referred to for columns etc., x is again the first argument of the function, `x.column` can be used to refer to columns in the dataframe.
 
 ### Functions
-Most verbs follow exact dplyr syntax, though sometimes there are slight variations due to differences in how Julia DataFrames work. For instance for pipes, `df |> x-> _func(x)` is the usual expected syntax of the package.
+Most verbs follow exact dplyr syntax, though sometimes there are slight variations due to differences in how Julia DataFrames work. 
 
 - **_select**: `df |> x-> _select(x, :col1, :col2)`
 - **_mutate**: `df |> x-> _mutate(x, new_col=10, new_col2=x.old .+ 1)`
