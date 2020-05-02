@@ -28,7 +28,12 @@ export _read_csv
 export _write_csv
 
 # select
-_except(df, x) = setdiff(Set(names(df)), Set(x)) |> collect
+function _except(df, x) 
+    col_order = Dict(zip(1:length(names(df)), names(df)))
+    col_order = DataFrame(order=collect(keys(col_order)), col=collect(values(col_order)))
+    keep_cols = setdiff(Set(names(df)), Set(x)) |> collect
+    return sort(col_order[in.(col_order.col, (keep_cols,)), :], :order)[!, :col]
+end
 _starts_with(df, x) = names(df)[startswith.(string.(names(df)), x)]
 _ends_with(df, x) = names(df)[endswith.(string.(names(df)), x)]
 _contains(df, x) = names(df)[occursin.(string.(names(df)), x)]
@@ -120,7 +125,7 @@ end
 
     example:
         df |> x->
-            _arrange(x, :col1, desc(:col2))
+            _arrange(x, :col1, _desc(:col2))
 """
 _desc(x) = order(x, rev=true)
 function _arrange(args...)
