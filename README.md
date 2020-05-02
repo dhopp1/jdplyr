@@ -1,5 +1,5 @@
 # jdplyr
-Dplyr-like syntax for DataFrames.jl.  Also exposes functions `DataFrames`, `Lazy`, and `Statistics`.
+Dplyr-like syntax for DataFrames.jl.  Also exposes functions of packages `DataFrames`, `Lazy`, and `Statistics`.
 
 ### Installation
 ```julia
