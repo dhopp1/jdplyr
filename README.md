@@ -37,7 +37,7 @@ Most verbs follow exact dplyr syntax, though sometimes there are slight variatio
 	- **_contains**: `df |> x-> _select(x, _contains(x, "middle"))` select all columns that contain a string
 - **_mutate**: `df |> x-> _mutate(x, new_col=10, new_col2=x.old .+ 1)`
 - **_filter**: `df |> x-> _filter(x, x.value .> 10, x.value2 .< 5, (x.value3 .== 1) .| (x.value4 .== 2))`
-- **_arrange**: `df |> x-> _arrange(x, :col1, desc(:col2))`
+- **_arrange**: `df |> x-> _arrange(x, :col1, _desc(:col2))`
 - **_summarise**: `df |> x-> _summarise(x, new_col = :col => sum)`
 - **_group_by**: `df |> x-> _group_by(x, :col1, :col2)`
 - **_group_by + _summarise**: `df |> x-> _group_by(x, :col1, :col2) |> x-> summarise(x, total = :col3 => sum)` 
