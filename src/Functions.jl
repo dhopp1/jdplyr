@@ -1,4 +1,4 @@
-using DataFrames
+using CSV, DataFrames
 
 export _select
 export _mutate
@@ -20,6 +20,8 @@ export _slice
 export desc
 export summarise_cols
 export summarize_cols
+export _read_csv
+export _write_csv
 
 # select
 """
@@ -267,4 +269,16 @@ end
 "return selected rows of form 1:10 of a dataframe"
 function _slice(df::DataFrame, rows)
     return df[rows, :]
+end
+
+# read csv
+"pass CSV.read to a dataframe, takes same kwargs as CSV.read"
+function _read_csv(path::String; kwargs...)
+    CSV.read(path; kwargs...) |> DataFrame
+end
+
+# write csv
+"write df to a CSV, takes same kwargs as CSV.write"
+function _write_csv(df::DataFrame, path::String; kwargs...)
+    CSV.write(path, df; kwargs...)
 end
